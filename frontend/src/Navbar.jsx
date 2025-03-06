@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import MenuKep from '/img/oktatas-01.jpg'
+import {Container} from 'react-bootstrap'
 
 function Navbar() {
 
   return (
     <>
       <div>
-      <h1>Navbar jsx</h1>
+      <Container>
+        <img src={MenuKep} alt="Menü kép"/>
+      </Container>
       </div>
     </>
   )

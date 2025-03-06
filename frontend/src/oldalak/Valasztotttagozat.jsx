@@ -7,10 +7,18 @@ import tajekoztatoKep from '/img/e-mail-marketing-2745489__340.jpg'
 import axios from "axios";
 function Valasztotttagozat() {
     const [nevsor, setnevsor] = useState([]);
+    const [nyek, setnyek] = useState([]);
     const { id } = useParams()
     axios.get("http://localhost:3001/FelvettekLista/" + id)
       .then((response) => {
         setnevsor(response.data);
+      })
+      .catch((err) => {
+        Console.log(err);
+      });
+      axios.get("http://localhost:3001/FelvettekNyek/" + id)
+      .then((response) => {
+        setnyek(response.data);
       })
       .catch((err) => {
         Console.log(err);
@@ -47,7 +55,9 @@ function Valasztotttagozat() {
             </Col>
         </Row>
         <Row>
-            <h4>Felvett névsor:</h4>
+        {nyek.map((nyekegy) => (
+            <h4>A felvettek névsora, {nyekegy.elokeszito}. A maximálisan felvehető tanulók száma: {nyekegy.helyekszama} fő. A választott ágazat: {nyekegy.agazat}.</h4>
+        ))}
          <Table striped bordered hover>
       <thead>
         <tr>

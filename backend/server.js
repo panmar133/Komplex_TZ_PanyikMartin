@@ -40,6 +40,13 @@ app.get('/FelvettekLista/:id', (req, res) => {
   })
 })
 
+app.get('/FelvettekNyek/:id', (req, res) => {
+  const sqlParancs = 'SELECT tagozatok.agazat, tagozatok.nyek, IF(tagozatok.nyek = 1, "Nyelvi előkészítő", "Nem nyelvi előkészítő") AS elokeszito, SUM(jelentkezesek.hely) AS helyekszama FROM `diakok` INNER JOIN jelentkezesek ON diakok.oktazon = jelentkezesek.diak INNER JOIN tagozatok ON tagozatok.akod = jelentkezesek.tag WHERE tagozatok.akod = ? ORDER BY diakok.hozott + diakok.kpmagy + diakok.kpmat DESC LIMIT 1;'
+  db.query(sqlParancs, req.params.id, (err, result) => {
+      res.json(result)
+  })
+})
+
 app.listen(3001, () => {
   console.log(`Fut a backend a 3001-es porton.`)
 })
